@@ -7,8 +7,8 @@ import 'package:notes_web/router/my_router.dart';
 class RegisteredOrGuestBlock extends StatelessWidget {
   RegisteredOrGuestBlock({Key? key}) : super(key: key);
 
-  void goAuthPage(BuildContext cont) {
-    GoRouter.of(cont).go(MyRouter.auth);
+  void goAuthPage(BuildContext context) {
+    GoRouter.of(context).go(MyRouter.auth);
   }
 
   void authAsGuest(BuildContext context) {

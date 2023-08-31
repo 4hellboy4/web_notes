@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:notes_web/constants/colors.dart';
+import 'package:notes_web/firebase/authentication.dart';
 import 'package:notes_web/providers/login_provider.dart';
+import 'package:notes_web/providers/sign_up_provider.dart';
+import 'package:notes_web/router/my_router.dart';
 import 'package:notes_web/widgets/login_page_name_label/login_page_name_lable.dart';
 import 'package:notes_web/widgets/login_text_field/login_text_field.dart';
 import 'package:notes_web/widgets/my_button/my_button.dart';
@@ -19,6 +23,10 @@ class _LoginPageMobileState extends State<LoginPageMobile> {
       TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  void goHome() {
+    GoRouter.of(context).go(MyRouter.home);
+  }
+
   @override
   void initState() {
     _usernameEmailController;
@@ -35,6 +43,8 @@ class _LoginPageMobileState extends State<LoginPageMobile> {
 
   @override
   Widget build(BuildContext context) {
+    var prov = Provider.of<SignUpProvider>(context, listen: false);
+
     return Scaffold(
       backgroundColor: white,
       body: Center(
@@ -68,7 +78,21 @@ class _LoginPageMobileState extends State<LoginPageMobile> {
                     .isObsecuredPassword,
               ),
               const SizedBox(height: 10),
-              MyButton(label: "login", onPressed: () {}, width: 130),
+              MyButton(
+                  label: "Войти",
+                  onPressed: () async {
+                    FirebaseFunctions().signInEmailPassword(
+                      _usernameEmailController.text.trim(),
+                      _passwordController.text.trim(),
+                      context,
+                    );
+                    // if (prov.isAuthenticated()) {
+                    //   print(prov.isAuthenticated() ? "true" : "false");
+                    //   goHome();
+                    // }
+                    // print(prov.isAuthenticated() ? "true" : "false");
+                  },
+                  width: 130),
               const SizedBox(height: 40),
               RegisteredOrGuestBlock(),
             ],

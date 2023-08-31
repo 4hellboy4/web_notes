@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:notes_web/pages/auth_page/auth_page.dart';
@@ -5,6 +7,9 @@ import 'package:notes_web/pages/error_page/error_page.dart';
 import 'package:notes_web/pages/guest_page/guest_page.dart';
 import 'package:notes_web/pages/home_page/home_page.dart';
 import 'package:notes_web/pages/login_page/login_page.dart';
+import 'package:notes_web/providers/sign_up_provider.dart';
+import 'package:notes_web/shared_preferences/user_pref.dart';
+import 'package:provider/provider.dart';
 
 class MyRouter {
   static const login = '/login';
@@ -13,7 +18,7 @@ class MyRouter {
   static const error = '/error';
   static const guest = '/auth/guest';
 
-  static Widget _homeBuilder(BuildContext context, GoRouterState steate) =>
+  static Widget _homeBuilder(BuildContext context, GoRouterState state) =>
       const HomePage();
   static Widget _loginBuilder(BuildContext context, GoRouterState state) =>
       const LoginPage();
@@ -25,7 +30,7 @@ class MyRouter {
       const GuestPage();
 
   static final _router = GoRouter(
-    initialLocation: home,
+    initialLocation: login,
     routes: <GoRoute>[
       GoRoute(
         path: home,

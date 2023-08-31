@@ -1,7 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notes_web/constants/colors.dart';
+import 'package:notes_web/firebase/authentication.dart';
+import 'package:notes_web/router/my_router.dart';
 import 'package:notes_web/widgets/auth_text_field/auth_text_field.dart';
 import 'package:notes_web/widgets/my_button/my_button.dart';
 
@@ -34,21 +36,14 @@ class _AuthPageMobileState extends State<AuthPageMobile> {
     super.dispose();
   }
 
-  Future singUp() async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final _key = GlobalKey<FormState>();
+    final key = GlobalKey<FormState>();
 
     return Scaffold(
       backgroundColor: white,
       body: Form(
-        key: _key,
+        key: key,
         child: Center(
           child: Padding(
             padding:
@@ -96,12 +91,19 @@ class _AuthPageMobileState extends State<AuthPageMobile> {
                 MyButton(
                   label: "Готово",
                   onPressed: () {
-                    if (_key.currentState!.validate()) {
-                      singUp();
+                    if (key.currentState!.validate() &&
+                        _passwordController.text.trim() ==
+                            _repeatedPasswordController.text.trim()) {
+                      FirebaseFunctions().signUpWithEmailPassword(
+                        _emailController.text.trim(),
+                        _passwordController.text.trim(),
+                        context,
+                      );
+                      GoRouter.of(context).go(MyRouter.login);
                     }
                   },
                   width: 150,
-                )
+                ),
               ],
             ),
           ),
