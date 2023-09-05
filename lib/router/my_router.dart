@@ -7,9 +7,6 @@ import 'package:notes_web/pages/error_page/error_page.dart';
 import 'package:notes_web/pages/guest_page/guest_page.dart';
 import 'package:notes_web/pages/home_page/home_page.dart';
 import 'package:notes_web/pages/login_page/login_page.dart';
-import 'package:notes_web/providers/sign_up_provider.dart';
-import 'package:notes_web/shared_preferences/user_pref.dart';
-import 'package:provider/provider.dart';
 
 class MyRouter {
   static const login = '/login';
@@ -33,6 +30,11 @@ class MyRouter {
     initialLocation: login,
     routes: <GoRoute>[
       GoRoute(
+        // redirect: (context, state) {
+        //   if () {
+        //     return login;
+        //   }
+        // },
         path: home,
         builder: _homeBuilder,
       ),
